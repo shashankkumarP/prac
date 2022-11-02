@@ -5,7 +5,9 @@ const bmi_model = require("../models/bmi_Schema")
 
 
 
-
+router.get("/",(req,res)=>{
+    res.send("hello")
+})
 
 router.get("/bmi",async(req,res)=>{
     let data = await bmi_model.find();
