@@ -6,7 +6,7 @@ const app = express()
 require("dotenv").config();
 const port = Number(process.env.PORT);
 const MONGODB_URL  = process.env.MONGODB_URL;
-const router = require("./routes/bmi")
+const router = require("./routes/masai")
 
 app.use(express.urlencoded({extended:true}));
 
