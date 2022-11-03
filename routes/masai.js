@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const router = express.Router();
-const bmi_model = require("../models/bmi_Schema")
+const masai_model = require("../models/masai_Schema")
 
 
 
@@ -9,11 +9,7 @@ router.get("/",(req,res)=>{
     res.send("hello")
 })
 
-router.get("/bmi",async(req,res)=>{
-    let data = await bmi_model.find();
-    console.log(data);
-    res.send(data);
-})
+
 
 router.post("/register",async(req,res)=>{
     let {name,email,password}= req.body;
@@ -22,7 +18,7 @@ router.post("/register",async(req,res)=>{
     }
 
     try{
-        let new_user = new bmi_model({name:name,email:email,password:password});
+        let new_user = new masai_model({name:name,email:email,password:password});
         await new_user.save();
         res.status(201).send({message:"user created",data:{name:name,email:email,password:password}});
 
@@ -39,7 +35,7 @@ router.post("/login",async(req,res)=>{
         return res.send({message:"pl. fill the form"})
     }
     try{
-        let user = await bmi_model.findOne({email:email});
+        let user = await masai_model.findOne({email:email});
         console.log(user);
         if((user.email==email)&&(user.password==password)){
             return res.send({message:"user verified",data:user});
@@ -53,25 +49,24 @@ router.post("/login",async(req,res)=>{
 
 })
 
-router.post("/bmi",async(req,res)=>{
-    let {email, weight,height} = req.body;
-    console.log(weight,height,email)
-    let bmi = Number(weight)/((Number(height)*0.3048)**2)
-    console.log(bmi);
+router.post("/create",async(req,res)=>{
+    let {email, message} = req.body;
+    console.log(message,email)
+    
    
 
     try{
-        let user= await bmi_model.updateOne({email:email},  { $push: { bmi_history: bmi } })
+        let user= await masai_model.updateOne({email:email},  { $push: { tickets: message } })
         res.status(201).send({message:"bmi added successfully",bmi:bmi})
     }catch(e){
         res.send({message:"user not found"})
     }
 });
 
-router.get("/getCalculation",async(req,res)=>{
+router.get("/history",async(req,res)=>{
     let {email} = req.body;
     try{
-        let data = await bmi_model.findOne({email:email});
+        let data = await masai_model.findOne({email:email});
         res.status(200).send({message:"found user",data:data})
 
     }catch(e){

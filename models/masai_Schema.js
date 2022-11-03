@@ -1,11 +1,11 @@
 const {Schema,model} = require("mongoose");
 
 
-const bmi_schema = new Schema({
+const masai_schema = new Schema({
     name:{type:String,required:true},
     email:{type:String,required:true,unique:true},
     password:{type:String,requied:true},
-    bmi_history:[]
+    tickets:[]
 
 },{
     strict:false
@@ -17,5 +17,5 @@ const bmi_schema = new Schema({
 
 
 
-const bmi_model = model("bmi",bmi_schema)
-module.exports=bmi_model
+const masai_model = model("masai",masai_schema)
+module.exports=masai_model
