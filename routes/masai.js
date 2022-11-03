@@ -11,7 +11,7 @@ router.get("/",(req,res)=>{
 
 
 
-router.post("/register",async(req,res)=>{
+router.post("/signup",async(req,res)=>{
     let {name,email,password}= req.body;
     if(!name||!email||!password){
         return res.send({message:"pl. fill the form"}); 
@@ -51,23 +51,26 @@ router.post("/login",async(req,res)=>{
 
 router.post("/create",async(req,res)=>{
     let {email, message} = req.body;
+    message.datatime = Date.now();
     console.log(message,email)
     
    
 
     try{
         let user= await masai_model.updateOne({email:email},  { $push: { tickets: message } })
-        res.status(201).send({message:"bmi added successfully",bmi:bmi})
+        console.log("ok")
+        res.status(201).send({message:"bmi added successfully",tickets:message})
     }catch(e){
         res.send({message:"user not found"})
     }
 });
 
-router.get("/history",async(req,res)=>{
+router.post("/history",async(req,res)=>{
     let {email} = req.body;
+    console.log("email",email)
     try{
         let data = await masai_model.findOne({email:email});
-        res.status(200).send({message:"found user",data:data})
+        res.status(200).send({message:"found user",data:data.tickets})
 
     }catch(e){
         res.send({message:"user not found"})
@@ -77,4 +80,3 @@ router.get("/history",async(req,res)=>{
 
 
 module.exports = router;
-
