@@ -37,7 +37,7 @@ router.post("/user", async(req,res)=>{
         return res.send({message:"pl. fill the form"})
     }
     try{
-        let user = await masai_model.find({category:category,difficulty:difficulty}).limit(num);
+        let user = await masai_model.find({category:category,difficulty:difficulty}).limit(Number(num));
         console.log(user);
        
         return res.send({message:"user verified",data:user});
