@@ -2,10 +2,11 @@ const {Schema,model} = require("mongoose");
 
 
 const masai_schema = new Schema({
-    name:{type:String,required:true},
-    email:{type:String,required:true,unique:true},
-    password:{type:String,requied:true},
-    tickets:[]
+    category:{type:String,required:true},
+    difficulty:{type:String,required:true},
+    question:{type:String,required:true,unique:true},
+    correct:{type:String,requied:true},
+    options:[]
 
 },{
     strict:false
@@ -15,7 +16,5 @@ const masai_schema = new Schema({
 })
 
 
-
-
-const masai_model = model("masai",masai_schema)
+const masai_model = model("masaiquiz",masai_schema)
 module.exports=masai_model
