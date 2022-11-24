@@ -3,9 +3,7 @@ const cors = require('cors');
 const router = require("./Router/Router");
 const connection = require("./db");
 const app=express();
-app.use(cors({
-    origin: '*'
-}));
+app.use(cors());
 
 app.use(express.json())
 app.use("/",router)
